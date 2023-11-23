@@ -1,0 +1,33 @@
+# serverless.yml
+
+org: cngman
+app: shop-cloudx-epam
+service: rs-cart-api
+frameworkVersion: '3'
+useDotenv: true
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: eu-west-1
+  environment:
+    POSTGRES_DB_HOST:
+    POSTGRES_DB_PORT:
+    POSTGRES_DB_USERNAME:
+    POSTGRES_DB_PASSWORD:
+
+functions:
+  main:
+    handler: dist/main.handler
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: '{proxy+}'
